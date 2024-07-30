@@ -1,0 +1,53 @@
+name: hmis
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.1
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  manager:
+    git: https://github.com/kmcite2020/manager.git
+  flex_color_scheme: ^7.3.1
+  font_awesome_flutter: ^10.7.0
+  json_annotation: ^4.8.1
+  freezed_annotation:
+  flutter_native_splash: ^2.3.10
+dev_dependencies:
+  freezed:
+  build_runner:
+  flutter_launcher_icons: ^0.13.1
+  # very_good_analysis: ^5.1.0
+  json_serializable: ^6.7.1    
+flutter:
+  assets:
+    - assets/
+    # - shorebird.yaml
+  uses-material-design: true
+flutter_native_splash:
+  image: "assets/hospital.png"
+  color: "#000000"
+  background_image: "assets/hospital_bg.png"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  # ios: true
+  image_path: "assets/hospital.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/hospital.png"
+    # background_color: "#hexcode"
+    # theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/hospital.png"
+    icon_size: 72 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/hospital.png"
+# dart run flutter_native_splash:create
+# dart run flutter_launcher_icons
