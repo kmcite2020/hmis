@@ -1,32 +1,21 @@
-import 'package:manager/persistent_spark.dart';
-
 import '../main.dart';
 
-final PatientsBloc patientsBloc = PatientsBloc(
-  Patients(),
-  key: "Patients",
-  fromJson: Patients.fromJson,
-);
+class AddOrUpdatePatientEvent {
+  final Patient patient;
+  const AddOrUpdatePatientEvent(this.patient);
+  String get id => patient.id;
+}
 
-class PatientsBloc extends PersistentSparkle<Patients> {
-  PatientsBloc(
-    super.initialState, {
-    required super.key,
-    required super.fromJson,
-  });
-  void add(Patient patient) {
-    set(
-      get.copyWith(
-        cache: Map.of(get.cache)..[patient.id] = patient,
-      ),
-    );
-  }
+class DeletePatientEvent {
+  final Patient patient;
+  const DeletePatientEvent(this.patient);
+  String get id => patient.id;
+}
 
-  void remove(String id) {
-    set(
-      get.copyWith(
-        cache: Map.of(get.cache)..remove(id),
-      ),
-    );
-  }
+Map<String, Patient> patientsRM(Map<String, Patient> state, action) {
+  return switch (action) {
+    AddOrUpdatePatientEvent() => Map.of(state)..[action.id] = action.patient,
+    DeletePatientEvent() => Map.of(state)..remove(action.id),
+    _ => state,
+  };
 }

@@ -10,7 +10,7 @@ _$InvestigationImpl _$$InvestigationImplFromJson(Map<String, dynamic> json) =>
     _$InvestigationImpl(
       id: json['id'] as String? ?? '',
       name: json['name'] as String? ?? '',
-      price: json['price'] as int? ?? 200,
+      price: (json['price'] as num?)?.toInt() ?? 200,
     );
 
 Map<String, dynamic> _$$InvestigationImplToJson(_$InvestigationImpl instance) =>

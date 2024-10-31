@@ -1,5 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:manager/persistent_spark.dart';
+import '../main.dart';
 
 part 'investigations.freezed.dart';
 part 'investigations.g.dart';
@@ -12,8 +11,7 @@ class Investigation with _$Investigation {
     @Default(200) final int price,
   }) = _Investigation;
 
-  factory Investigation.fromJson(Map<String, dynamic> json) =>
-      _$InvestigationFromJson(json);
+  factory Investigation.fromJson(Map<String, dynamic> json) => _$InvestigationFromJson(json);
 }
 
 @freezed
@@ -22,32 +20,26 @@ class Investigations with _$Investigations {
     @Default(<String, Investigation>{}) final Map<String, Investigation> cache,
   }) = _Investigations;
 
-  factory Investigations.fromJson(Map<String, dynamic> json) =>
-      _$InvestigationsFromJson(json);
+  factory Investigations.fromJson(Map<String, dynamic> json) => _$InvestigationsFromJson(json);
 }
 
-final investigationsBloc = InvestigationsBloc(
-  Investigations(),
-  key: 'investigations',
-  fromJson: Investigations.fromJson,
+final investigationsRM = RM.inject(
+  () => Investigations(),
+  persist: () => persisted('investigations', Investigations.fromJson),
 );
 
-class InvestigationsBloc extends PersistentSparkle<Investigations> {
-  InvestigationsBloc(super.initialState,
-      {required super.key, required super.fromJson});
-
-  add(Investigation investigation) {
-    set(
-      get.copyWith(
-          cache: Map.of(get.cache)..[investigation.id] = investigation),
-    );
-  }
-
-  void remove(String id) {
-    set(
-      get.copyWith(cache: Map.of(get.cache)..remove(id)),
-    );
-  }
-
-  void clear() => set(get.copyWith(cache: {}));
+Investigations investigations([_]) {
+  if (_ != null) investigationsRM.state = _;
+  return investigationsRM.state;
 }
+
+Map<String, Investigation> mapOfInvestigations([Map<String, Investigation>? _investigation]) {
+  if (_investigation != null) investigations(investigations().copyWith(cache: _investigation));
+  return investigations().cache;
+}
+
+Iterable<Investigation> get iterableOfInvestigations => mapOfInvestigations().values;
+
+addInvestigtaion(Investigation i) => mapOfInvestigations(Map.of(mapOfInvestigations())..[i.id] = i);
+removeInvestigtaion(String id) => mapOfInvestigations(Map.of(mapOfInvestigations())..remove(id));
+clearInvestigtaions() => mapOfInvestigations({});

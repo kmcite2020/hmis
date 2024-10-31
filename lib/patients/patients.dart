@@ -1,10 +1,24 @@
-// ignore_for_file: avoid_final_parameters
-
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hmis/main.dart';
 
 part 'patients.g.dart';
 part 'patients.freezed.dart';
+
+final patientsRM = RM.inject(
+  () => Patients(),
+  persist: () => persisted('patients', Patients.fromJson),
+);
+
+Patients patients([Patients? _]) {
+  if (_ != null) patientsRM.state = _;
+  return patientsRM.state;
+}
+
+Map<String, Patient> mapOfPatients([Map<String, Patient>? _]) {
+  if (_ != null) patients(patients().copyWith(cache: _));
+  return patients().cache;
+}
+
+Iterable<Patient> get iterableOfpatients => mapOfPatients().values;
 
 @freezed
 class Patients with _$Patients {
@@ -12,8 +26,7 @@ class Patients with _$Patients {
     @Default(<String, Patient>{}) final Map<String, Patient> cache,
   }) = _Patients;
 
-  factory Patients.fromJson(Map<String, dynamic> json) =>
-      _$PatientsFromJson(json);
+  factory Patients.fromJson(Map<String, dynamic> json) => _$PatientsFromJson(json);
 }
 
 @freezed
@@ -27,9 +40,8 @@ class Patient with _$Patient {
     @Default(OutComeStatus.emergency) final OutComeStatus outComeStatus,
     @Default('') final String diagnosis,
   }) = _Patient;
-  factory Patient.get({required String id}) => patientsBloc.get.cache[id]!;
-  factory Patient.fromJson(Map<String, dynamic> json) =>
-      _$PatientFromJson(json);
+  factory Patient.get({required String id}) => mapOfPatients()[id]!;
+  factory Patient.fromJson(Map<String, dynamic> json) => _$PatientFromJson(json);
   const Patient._();
   int get bills {
     return this.investigations.fold(

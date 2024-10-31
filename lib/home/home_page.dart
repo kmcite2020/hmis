@@ -1,5 +1,7 @@
 import 'package:hmis/main.dart';
 
+import '../settings/settings_page.dart';
+
 class HomePage extends UI {
   const HomePage({super.key});
 
@@ -24,7 +26,7 @@ class HomePage extends UI {
           Opacity(
             opacity: 0.4,
             child: Align(
-              child: settingsBloc().hospitalName.text(),
+              child: hospitalName().text(),
             ),
           ),
           Opacity(
@@ -33,7 +35,7 @@ class HomePage extends UI {
               children: [
                 FilledButton.icon(
                   onPressed: () {
-                    Navigation(PatientsPage());
+                    navigator.to(PatientsPage());
                   },
                   icon: const Icon(FontAwesomeIcons.route),
                   label: Align(
@@ -43,7 +45,7 @@ class HomePage extends UI {
                 ).pad(),
                 FilledButton.icon(
                   onPressed: () {
-                    Navigation(InvestigationsPage());
+                    navigator.to(InvestigationsPage());
                   },
                   icon: const Icon(FontAwesomeIcons.fileInvoice),
                   label: Align(
@@ -53,7 +55,7 @@ class HomePage extends UI {
                 ).pad(),
                 FilledButton.icon(
                   onPressed: () {
-                    Navigation(SettingsPage());
+                    navigator.to(SettingsPage());
                   },
                   icon: const Icon(FontAwesomeIcons.confluence),
                   label: Align(

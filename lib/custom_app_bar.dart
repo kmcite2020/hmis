@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hmis/main.dart';
 
+class CustomAppBarModel {}
+
 class CustomAppBar extends UI implements PreferredSizeWidget {
   final String title;
   final Widget? leading;
@@ -25,27 +27,27 @@ class CustomAppBar extends UI implements PreferredSizeWidget {
           leading: leading ??
               IconButton(
                 onPressed: () {
-                  Navigation(HomePage());
+                  navigator.to(HomePage());
                 },
                 icon: const FaIcon(FontAwesomeIcons.house),
               ),
           bottom: bottom ??
               TabBar(
                 onTap: (_) {
-                  Navigation(
+                  navigator.to(
                     AlertDialog(
                       title: 'User'.text(),
                       content: TextFormField(
-                        initialValue: settingsBloc().userName,
-                        onChanged: settingsBloc.userName,
-                        onEditingComplete: () => Navigation(HomePage()),
+                        initialValue: userName(),
+                        onChanged: userName,
+                        onEditingComplete: () => navigator.to(HomePage()),
                       ),
                     ),
                   );
                 },
                 tabs: [
                   Tab(
-                    text: settingsBloc().userName,
+                    text: userName(),
                   ),
                 ],
                 overlayColor: WidgetStateProperty.all(Colors.transparent),

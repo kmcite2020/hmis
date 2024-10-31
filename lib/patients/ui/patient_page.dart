@@ -26,9 +26,9 @@ class PatientPage extends UI {
           TextFormField(
             initialValue: patient.name,
             onChanged: (name) {
-              patientsBloc.add(
-                patient.copyWith(name: name),
-              );
+              // patientsBloc.add(
+              //   patient.copyWith(name: name),
+              // );
             },
           ).pad(),
           'AGE'.text(),
@@ -44,9 +44,9 @@ class PatientPage extends UI {
                   return value;
                 },
               );
-              patientsBloc.add(
-                patient.copyWith(age: age),
-              );
+              // patientsBloc.add(
+              //   patient.copyWith(age: age),
+              // );
             },
           ).pad(),
           Row(
@@ -55,23 +55,21 @@ class PatientPage extends UI {
               'INVESTIGATIONS'.text().pad(),
               PopupMenuButton(
                 onSelected: (investigation) {
-                  if (patient.investigations.contains(investigation)) {
-                    patientsBloc.add(
-                      patient.copyWith(
-                        investigations: List.of(patient.investigations)
-                          ..remove(investigation),
-                      ),
-                    );
-                  } else {
-                    patientsBloc.add(
-                      patient.copyWith(
-                        investigations: List.of(patient.investigations)
-                          ..add(investigation),
-                      ),
-                    );
-                  }
+                  // if (patient.investigations.contains(investigation)) {
+                  //   patientsBloc.add(
+                  //     patient.copyWith(
+                  //       investigations: List.of(patient.investigations)..remove(investigation),
+                  //     ),
+                  //   );
+                  // } else {
+                  //   patientsBloc.add(
+                  //     patient.copyWith(
+                  //       investigations: List.of(patient.investigations)..add(investigation),
+                  //     ),
+                  //   );
+                  // }
                 },
-                itemBuilder: (_) => investigationsBloc.get.cache.values.map(
+                itemBuilder: (_) => iterableOfInvestigations.map(
                   (value) {
                     return PopupMenuItem(
                       value: value,
@@ -97,12 +95,11 @@ class PatientPage extends UI {
                     labelPadding: const EdgeInsets.all(1),
                     label: eachInvestigaion.name.text(),
                     onDeleted: () {
-                      patientsBloc.add(
-                        patient.copyWith(
-                          investigations: List.of(patient.investigations)
-                            ..remove(eachInvestigaion),
-                        ),
-                      );
+                      // patientsBloc.add(
+                      //   patient.copyWith(
+                      //     investigations: List.of(patient.investigations)..remove(eachInvestigaion),
+                      //   ),
+                      // );
                     },
                   ).pad(all: 2),
                 )

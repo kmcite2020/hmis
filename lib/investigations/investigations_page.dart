@@ -8,15 +8,15 @@ class InvestigationsPage extends UI {
     return Scaffold(
       appBar: CustomAppBar(title: 'Investigations'),
       body: ListView(
-        children: investigationsBloc.get.cache.values.map(
-          (investigationEntry) {
+        children: iterableOfInvestigations.map(
+          (investigation) {
             return ListTile(
-              title: investigationEntry.name.text(textScaleFactor: 1.2),
+              title: investigation.name.text(textScaleFactor: 1.2),
               trailing: IconButton.outlined(
                 onPressed: () {
-                  investigationsBloc.remove(investigationEntry.id);
+                  // investigationsBloc.remove(investigation.id);
                 },
-                icon: investigationEntry.price.text(),
+                icon: investigation.price.text(),
               ),
             );
           },
@@ -27,7 +27,7 @@ class InvestigationsPage extends UI {
         children: [
           FilledButton(
             onPressed: () {
-              investigationsBloc.add(const Investigation());
+              // investigationsBloc.add(const Investigation());
             },
             child: 'Add New Investigation'.text(),
           ).pad(),

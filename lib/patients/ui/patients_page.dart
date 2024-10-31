@@ -1,7 +1,6 @@
 import 'package:hmis/main.dart';
 
-final idRM = Sparkle('');
-setId(String i) => idRM.set(i);
+// setId(String i) => idRM.set(i);
 
 class PatientsPage extends UI {
   const PatientsPage({super.key});
@@ -19,7 +18,7 @@ class PatientsPage extends UI {
           // }
         },
       ),
-      body: patientsBloc.get.cache.isEmpty
+      body: iterableOfpatients.isEmpty
           ? Align(
               child: const FaIcon(
                 FontAwesomeIcons.peopleGroup,
@@ -28,22 +27,21 @@ class PatientsPage extends UI {
             )
           : ListView(
               physics: const BouncingScrollPhysics(),
-              children: patientsBloc.get.cache.entries.map(
-                (patientEntry) {
-                  final patient = patientEntry.value;
+              children: iterableOfpatients.map(
+                (patient) {
                   return Card(
                     child: ListTile(
                       leading: CircleAvatar(
                         child: patient.age.text(),
                       ),
                       onTap: () {
-                        setId(patient.id);
-                        Navigation(PatientPage(
-                          id: idRM(),
-                        ));
+                        // setId(patient.id);
+                        // Navigation(PatientPage(
+                        //   id: idRM(),
+                        // ));
                       },
                       title: patient.name.text(textScaleFactor: 1.2),
-                      selected: patient.id == idRM(),
+                      // selected: patient.id == idRM(),
                     ),
                   );
                 },
